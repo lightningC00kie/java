@@ -1,12 +1,10 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class InputReader {
     private Scanner s;
-    private int boardSize;
+    public int boardSize;
     public int steps;
     private void ReadSetup() {
         this.s = new Scanner(System.in);
@@ -20,7 +18,7 @@ public class InputReader {
             char[] chars = s.nextLine().toCharArray();
             List<Cell> curRow = new ArrayList<>();
             for (int col = 0; col < boardSize; col++) {
-                Cell c = new Cell(chars[col], row, col, b);
+                Cell c = new Cell(chars[col], row, col);
                 curRow.add(c);
             }
             b.cells.add(curRow);

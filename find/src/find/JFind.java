@@ -1,5 +1,4 @@
 package find;
-//package cz.cuni.mff.java.homework.jfind;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,17 +11,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class JFind {
-	
 	private static Map<String, String> argsMap = new HashMap<String, String>();
 	private static String dir;
 	public static void find(String[] args) {
 		if(!dirIsValid(args[0])) {
+			System.out.println("ERROR");
 			return;
 		}
 		dir = args[0];
 		int i = 1;
 		while (i < args.length) {
-			if (argIsValid(args[i]) && i <= args.length - 1) {
+			if (argIsValid(args[i]) && i <= args.length - 2 && paramIsValid(args[i], args[i+1])) {
 				argsMap.put(args[i] , args[i+1]);
 				i += 2;
 			}
@@ -55,14 +54,13 @@ public class JFind {
 				return false;
 			}
 			try {
-				if (key.equals("-size") && validateSizeParam(argsMap.get(key)) && convertSize(argsMap.get(key)) != Files.size(p)) {
-					System.out.println("made it here");
+				if (key.equals("-size") && (long)convertSize(argsMap.get(key)) != Files.size(p)) {
 					return false;
 				}
-				if (key.equals("-ssize") && validateSizeParam(argsMap.get(key)) && convertSize(argsMap.get(key)) <= Files.size(p)) {
+				if (key.equals("-ssize") && (long)convertSize(argsMap.get(key)) <= Files.size(p)) {
 					return false;
 				}
-				if (key.equals("-bsize") && validateSizeParam(argsMap.get(key)) && convertSize(argsMap.get(key)) >= Files.size(p)) {
+				if (key.equals("-bsize") && (long)convertSize(argsMap.get(key)) >= Files.size(p)) {
 					return false;
 				}
 			}
@@ -83,7 +81,7 @@ public class JFind {
 	}
 	
 	private static boolean validateSizeParam(String size) {
-		Pattern pattern = Pattern.compile("^[\\d]+[kM]?$");
+		Pattern pattern = Pattern.compile("^[\\d]+(\\.[0-9]+)?[kM]?$");
 	    Matcher matcher = pattern.matcher(size);
 	    return matcher.find();
 	}
@@ -96,15 +94,15 @@ public class JFind {
 	    return name.matches(convertRegex(regex));
 	}
 	
-	private static int convertSize(String size) {
+	private static double convertSize(String size) {
 		if (size.endsWith("M")) {
-			return Integer.parseInt(size.substring(0, size.length()-1)) * 1024 * 1024;
+			return Double.parseDouble(size.substring(0, size.length()-1)) * 1024 * 1024;
 		}
 		if (size.endsWith("k")) {
-			return Integer.parseInt(size.substring(0, size.length()-1)) * 1024;
+			return Double.parseDouble(size.substring(0, size.length()-1)) * 1024;
 		}
 		else {
-			return Integer.parseInt(size);
+			return Double.parseDouble(size);
 		}
 	}
 	
@@ -119,7 +117,14 @@ public class JFind {
 	}
 	
 	private static String trimPath(Path p) {
-		return p.toString().replace(dir + "/", "");
+		return p.toString().replaceFirst(dir + "/", "");
+	}
+	
+	private static boolean paramIsValid(String arg, String param) {
+		if (arg.equals("-size") || arg.equals("-ssize") || arg.equals("-bsize")) {
+			return validateSizeParam(param);
+		}
+		return true;
 	}
 }
 

@@ -13,7 +13,6 @@ public class Main extends PApplet{
 	}
 
     public void setup() {
-        background(187,173,160);
         Integer[][] colors = new Integer[11][3];
         colors[0] = new Integer[] {238, 228, 218};
         colors[1] = new Integer[] {237, 224, 200};
@@ -28,13 +27,12 @@ public class Main extends PApplet{
         colors[10] = new Integer[] {237, 194, 45};
         for (int i = 0; i < 11; i++) {
         	Square.setColor((int)Math.pow(2, i+1), colors[i]);
-        }
-        
-        b.addSquare(Square.generateSquare());
-        
+        }        
     }
 
     public void draw() {
+
+        background(165, 144, 129);
         drawGrid();
 
         for (Square s : b.squares) {
@@ -45,7 +43,7 @@ public class Main extends PApplet{
     
     public void drawGrid() {
     	noStroke();
-    	fill(204, 192, 179, 23);
+    	fill(193, 175, 158);
     	float startY = 5;
     	float startX = 5;
     	float width = 120;
@@ -73,10 +71,21 @@ public class Main extends PApplet{
     }
     
     public void keyPressed() {
-    	  if (key == CODED) {
-    	    if (keyCode == UP) {
+    	    if (keyCode == UP || key == 'w') {
     	      b.moveSquares(Direction.up);
+    	      b.addSquare();
     	    } 
-    	}
+    	    if (keyCode == DOWN || key == 's') {
+      	      b.moveSquares(Direction.down);
+      	    b.addSquare();
+      	    } 
+    	    if (keyCode == LEFT || key == 'a') {
+    	      b.moveSquares(Direction.left);
+    	      b.addSquare();
+    	    } 
+    	    if (keyCode == RIGHT || key == 'd') {
+    	      b.moveSquares(Direction.right);
+    	      b.addSquare();
+    	    }
     }
 }

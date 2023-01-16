@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class Square {
 	int val;
@@ -8,6 +7,10 @@ public class Square {
 	private static Map<Integer, Integer[]> colors = new HashMap<Integer, Integer[]>();
 	public float width = 120;
 	public float height = 120;
+	Square left;
+	Square right;
+	Square up;
+	Square down;
 	
 	public Square(int val, int[] pos) {
 		this.val = val; this.pos = pos;
@@ -15,16 +18,24 @@ public class Square {
 	
 	public void move(Direction d) {
 		if (d == Direction.up) {
-			this.pos[1] -= 1;
+			while (this.up == null && this.pos[1] > 0) {
+				this.pos[1] -= 1;
+			}
 		}
 		else if (d == Direction.down) {
-			this.pos[1] += 1;
+			while (this.down == null && this.pos[1] < 3) {
+				this.pos[1] += 1;
+			}
 		}
 		else if (d == Direction.left) {
-			this.pos[0] -= 1;
+			while (this.left == null && this.pos[0] > 0) {
+				this.pos[0] -= 1;
+			}
 		}
 		else if (d == Direction.right) {
-			this.pos[0] += 1;
+			while (this.right == null && this.pos[0] < 3) {
+				this.pos[0] += 1;
+			}
 		}
 	}
 	
@@ -47,14 +58,5 @@ public class Square {
 		else {
 			return new int[] {249, 246, 242};
 		}
-	}
-	
-	public static Square generateSquare() {
-		Random rand = new Random();
-		int randInt = rand.nextInt(2);
-		if (randInt == 0) {
-			return new Square(2, new int[] {1, 1});
-		}
-		return new Square(4, new int[] {1, 1});
 	}
 }

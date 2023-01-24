@@ -1,9 +1,13 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Square {
+import processing.core.PApplet;
+
+public class Square extends PApplet {
 	int val;
 	int[] pos = new int[2];
+	int x = (int)this.getCoords()[0];
+	int y = (int)this.getCoords()[1];
 	private static Map<Integer, Integer[]> colors = new HashMap<Integer, Integer[]>();
 	public float width = 120;
 	public float height = 120;
@@ -57,6 +61,32 @@ public class Square {
 		}
 		else {
 			return new int[] {249, 246, 242};
+		}
+	}
+	
+//	void display() {
+//    	Integer[] color = this.getColor();
+//    	fill(color[0], color[1], color[2]);
+//    	rect(x, y, this.width, this.height);
+//    	int[] textColor = this.getTextColor();
+//    	fill(textColor[0], textColor[1], textColor[2]);
+//    	textSize(80);
+//    	text(String.valueOf(this.val), (float)(x + 40), (float)(y + 80));
+//    	this.slide();
+//	}
+	
+	void slide() {
+		if (this.x < this.getCoords()[0]) {
+			this.x += 2;
+		}
+		else if (this.x > this.getCoords()[0]) {
+			this.x -= 2;
+		}
+		else if (this.y < this.getCoords()[1]) {
+			this.y += 2;
+		}
+		else if (this.y > this.getCoords()[1]) {
+			this.y -= 2;
 		}
 	}
 }

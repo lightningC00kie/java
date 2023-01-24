@@ -73,19 +73,16 @@ public class Main extends PApplet{
     public void keyPressed() {
     	    if (keyCode == UP || key == 'w') {
     	      b.moveSquares(Direction.up);
-    	      b.addSquare();
+//    	      b.addSquare();
     	    } 
     	    if (keyCode == DOWN || key == 's') {
       	      b.moveSquares(Direction.down);
-      	    b.addSquare();
       	    } 
     	    if (keyCode == LEFT || key == 'a') {
     	      b.moveSquares(Direction.left);
-    	      b.addSquare();
     	    } 
     	    if (keyCode == RIGHT || key == 'd') {
     	      b.moveSquares(Direction.right);
-    	      b.addSquare();
     	    }
     }
 }

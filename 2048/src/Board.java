@@ -29,7 +29,7 @@ public class Board {
 		}
 	}
 	
-	public void setNeighbors(Square s) {
+	private void setNeighbors(Square s) {
 		for(Square q : this.squares) {
 			if (isAdjacent(q, s)) {
 				if(q.pos[0] == s.pos[0] + 1) {
@@ -48,7 +48,7 @@ public class Board {
 		}
 	}
 	
-	public boolean isAdjacent(Square s1, Square s2) {
+	private boolean isAdjacent(Square s1, Square s2) {
 		if ((s1.pos[0] == s2.pos[0] + 1 || s1.pos[0] == s2.pos[0] - 1) && s1.pos[1] == s2.pos[1]) {
 			return true;
 		}
@@ -58,7 +58,7 @@ public class Board {
 		return false;
 	}
 	
-	public Square generateSquare() {
+	private Square generateSquare() {
 		Random rand = new Random();
 		int val = rand.nextInt(2);
 		int[] pos = getEmptySquare();
